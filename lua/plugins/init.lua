@@ -104,7 +104,7 @@ end)
 later(function()
   add 'lewis6991/gitsigns.nvim'
 
-  if vim.fn.executable('lazygit') == 1 then
+  if vim.fn.executable 'lazygit' == 1 then
     add {
       source = 'kdheepak/lazygit.nvim',
       depends = { 'nvim-lua/plenary.nvim' },
@@ -248,8 +248,9 @@ later(function()
   -- Configure formatters (use stylua for application/lua) and keymaps
   require('kulala').setup {
     formatters = {
-      ['application/lua'] =
-        'stylua --config-path ' .. vim.fn.expand('~/.config/nvim/.stylua.toml') .. ' -',
+      ['application/lua'] = 'stylua --config-path '
+        .. vim.fn.expand '~/.config/nvim/.stylua.toml'
+        .. ' -',
     },
   }
 

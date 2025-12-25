@@ -61,7 +61,7 @@ gitsigns.setup {
 
 -- Keymaps
 
-if vim.fn.executable('lazygit') == 1 then
+if vim.fn.executable 'lazygit' == 1 then
   vim.keymap.set('n', '<leader>gL', '<cmd>LazyGit<cr>', { desc = 'LazyGit (Project cwd)' })
   vim.keymap.set(
     'n',

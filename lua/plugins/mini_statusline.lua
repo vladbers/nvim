@@ -1,6 +1,19 @@
-local dracula = require('dracula').colors()
+local function get_hl_color(name, key, fallback)
+  local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = name, link = false })
+  if ok and type(hl) == 'table' and hl[key] then
+    return hl[key]
+  end
+  return fallback
+end
+
+local function statusline_colors()
+  local menu_bg = get_hl_color('Pmenu', 'bg', get_hl_color('StatusLine', 'bg', 'NONE'))
+  local normal_fg = get_hl_color('Normal', 'fg', 'NONE')
+  return { menu_bg = menu_bg, normal_fg = normal_fg }
+end
 
 local function statuslineActive()
+  local colors = statusline_colors()
   local section_fileinfo = function(args)
     local filetype = vim.bo.filetype
 
@@ -103,11 +116,11 @@ local function statuslineActive()
     if hl_colors.reverse then
       vim.api.nvim_set_hl(0, hl_name_inverted, {})
     elseif hl_colors.bg and not hl_colors.fg then
-      vim.api.nvim_set_hl(0, hl_name_inverted, { fg = hl_colors.bg, bg = 'bg' })
+      vim.api.nvim_set_hl(0, hl_name_inverted, { fg = hl_colors.bg, bg = 'NONE' })
     elseif hl_colors.fg and not hl_colors.bg then
-      vim.api.nvim_set_hl(0, hl_name_inverted, { fg = 'bg', bg = 'bg' })
+      vim.api.nvim_set_hl(0, hl_name_inverted, { fg = hl_colors.fg, bg = 'NONE' })
     else
-      vim.api.nvim_set_hl(0, hl_name_inverted, { fg = hl_colors.bg, bg = 'bg' })
+      vim.api.nvim_set_hl(0, hl_name_inverted, { fg = hl_colors.bg, bg = 'NONE' })
     end
     return hl_name_inverted
   end
@@ -120,20 +133,20 @@ local function statuslineActive()
   local dev_hl_invert = ''
   if icon_hl ~= nil then
     local icon_hl_colors = vim.api.nvim_get_hl(0, { name = icon_hl, link = false })
-    vim.api.nvim_set_hl(0, 'MiniStatuslineFileinfo', { fg = icon_hl_colors.fg, bg = dracula.menu })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineFileinfo', { fg = icon_hl_colors.fg, bg = colors.menu_bg })
 
-    vim.api.nvim_set_hl(0, 'MiniStatuslineDevinfo', { fg = icon_hl_colors.fg, bg = dracula.menu })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineDevinfo', { fg = icon_hl_colors.fg, bg = colors.menu_bg })
     local dev_hl_colors = vim.api.nvim_get_hl(0, { name = 'MiniStatuslineDevinfo', link = false })
     dev_hl_invert = invertHighlightGroup('MiniStatuslineDevinfo', dev_hl_colors)
   else
-    vim.api.nvim_set_hl(0, 'MiniStatuslineDevinfo', { fg = dracula.white, bg = dracula.menu })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineDevinfo', { fg = colors.normal_fg, bg = colors.menu_bg })
     local dev_hl_colors = vim.api.nvim_get_hl(0, { name = 'MiniStatuslineDevinfo', link = false })
     dev_hl_invert = invertHighlightGroup('MiniStatuslineDevinfo', dev_hl_colors)
-    vim.api.nvim_set_hl(0, 'MiniStatuslineFileinfo', { fg = dracula.white, bg = dracula.menu })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineFileinfo', { fg = colors.normal_fg, bg = colors.menu_bg })
   end
 
   -- Setup filename section colors
-  vim.api.nvim_set_hl(0, 'MiniStatuslineFilename', { fg = dracula.white, bg = 'bg' })
+  vim.api.nvim_set_hl(0, 'MiniStatuslineFilename', { fg = colors.normal_fg, bg = 'NONE' })
 
   -- Do not show rounded corners for the dev section
   local devLeftOuter, devRightOuter = '', ''
@@ -173,4 +186,4 @@ local statusline = require 'mini.statusline'
 statusline.setup { content = { active = statuslineActive }, use_icons = true }
 
 -- Change the color of the division block by using its highlight group
-vim.api.nvim_set_hl(0, 'Statusline', { bg = 'bg' })
+vim.api.nvim_set_hl(0, 'Statusline', { bg = 'NONE' })

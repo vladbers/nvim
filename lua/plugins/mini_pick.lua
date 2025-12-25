@@ -333,7 +333,10 @@ end
 local state = {}
 
 local ns_id = vim.api.nvim_create_namespace 'MiniPick FFFiles Picker'
-vim.api.nvim_set_hl(0, 'FFFileScore', { fg = require('dracula').colors().yellow })
+local score_color = vim.api.nvim_get_hl(0, { name = 'DiagnosticWarn', link = false }).fg
+  or vim.api.nvim_get_hl(0, { name = 'Statement', link = false }).fg
+  or vim.api.nvim_get_hl(0, { name = 'Identifier', link = false }).fg
+vim.api.nvim_set_hl(0, 'FFFileScore', { fg = score_color })
 
 ---@param query string|nil
 ---@return PickerItem[]

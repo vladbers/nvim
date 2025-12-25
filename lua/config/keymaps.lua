@@ -46,12 +46,6 @@ vim.keymap.set('n', 'G', function()
   MiniAnimate.execute_after('scroll', 'normal! zz')
 end)
 
--- Move line up or down
-vim.keymap.set('n', 'j', "v:move '<-2<CR>gv=gv<ESC>")
-vim.keymap.set('n', 'k', "v:move '>+1<CR>gv=gv<ESC>")
-vim.keymap.set('x', 'j', ":move '<-2<CR>gv=gv")
-vim.keymap.set('x', 'k', ":move '>+1<CR>gv=gv")
-
 -- Have cursor stay in place when joining lines together
 vim.keymap.set('n', 'J', 'mzJ`z')
 

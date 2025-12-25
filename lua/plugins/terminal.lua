@@ -1,7 +1,7 @@
 require('floaterm').setup {
   size = {
     h = 80,
-    w = 80,
+    w = 60,
   },
   mappings = {
     term = function(buf)

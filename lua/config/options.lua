@@ -16,7 +16,7 @@ vim.o.relativenumber = false
 vim.o.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
-vim.o.showmode = false
+vim.o.showmode = true
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -27,7 +27,7 @@ vim.schedule(function()
 end)
 
 -- Enable break indent
-vim.o.breakindent = true
+vim.o.breakindent = false
 
 -- Save undo history
 vim.o.undofile = true

@@ -85,8 +85,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       require('live-rename').rename { insert = true }
     end, 'LSP: [R]ename')
 
-    map('h', vim.lsp.buf.hover, 'LSP: [H]over')
-    vim.keymap.set('n', 'K', '<nop>')
+    map('K', vim.lsp.buf.hover, 'LSP: Hover')
 
     if
       client and client:supports_method(vim.lsp.protocol.Methods.textDocument_codeLens, event.buf)

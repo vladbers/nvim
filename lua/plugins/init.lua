@@ -36,7 +36,6 @@ now(function()
     name = 'mini.nvim',
     depends = {
       'Mofiqul/dracula.nvim.git',
-      'kyazdani42/blue-moon',
       'nvim-treesitter/nvim-treesitter',
       'nvim-treesitter/nvim-treesitter-textobjects',
       'JoosepAlviste/nvim-ts-context-commentstring',
@@ -45,7 +44,7 @@ now(function()
   }
 
   require 'plugins.colorschemes'
-  vim.cmd.colorscheme 'blue-moon'
+  vim.cmd.colorscheme 'dracula'
 end)
 
 now_if_args(function()
